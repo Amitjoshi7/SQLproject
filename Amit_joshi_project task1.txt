@@ -78,11 +78,11 @@ exec spcust 2000
 
 
 create table new_table
-	(customer varchar(30),
-	grade int,salesman varchar(30),
-	ord_no int not null,
-	purch_amt money
-	)
+(customer varchar(30),
+grade int,salesman varchar(30),
+ord_no int,
+purch_amt money
+)
 
 insert into new_table exec spcust 2000
 
@@ -93,15 +93,18 @@ select * from new_table
 
 insert into new_table(customer,grade,salesman,ord_no,purch_amt) values('harry kane',100,'kiff selos',70006,3450)
 
+alter table new_table
+alter column ord_no int not null
 
-alter table new_table add constraint PK_new_table_order_id primary key (ord_no)
+alter table new_table 
+add primary key (ord_no) 
 
-alter procedure spcust2
-	@Customer varchar(30),
-	@grade int,
-	@salesman varchar(20),
-	@ord_no int ,
-	@purch_amt money
+create procedure spcust2
+@Customer varchar(30),
+@grade int,
+@salesman varchar(20),
+@ord_no int ,
+@purch_amt money
 as
 begin
 	if exists (select * from new_table where ord_no=@ord_no)
@@ -111,5 +114,5 @@ begin
 		insert into new_table(customer,grade,salesman,ord_no,purch_amt) values(@customer,@grade,@salesman,@ord_no,@purch_amt)
 end
 
-spcust2 'jason ryno',200,'jeff balone',70004,2340
-spcust2 'Mike trevor',300,'matthew wade',70005,2300
+spcust2 'Jason ryno',200,'Jeff balone',70004,2340
+spcust2 'Mike trevor',300,'Matthew wade',70005,2300
