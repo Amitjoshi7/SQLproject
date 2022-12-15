@@ -114,5 +114,5 @@ begin
 		insert into new_table(customer,grade,salesman,ord_no,purch_amt) values(@customer,@grade,@salesman,@ord_no,@purch_amt)
 end
 
-spcust2 'sumit kumar',400,'meet shah',70004,5000
-spcust2 'Mike trevor',300,'Matthew wade',70009,2300
+spcust2 'Jason ryno',200,'Jeff balone',70004,2340
+spcust2 'Mike trevor',300,'Matthew wade',70005,2300
