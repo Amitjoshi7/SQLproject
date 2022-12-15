@@ -15,12 +15,8 @@ insert into Hra_updated exec hraupdated
 
 select * from Hra_updated   --target
 
-update Hra_updated set department='biology' where educationfield='Human resources'
 
-declare @employeenumber int
-declare @department varchar(50)
-declare @educationfield varchar(50)
-declare @jobrole varchar(40)
+
 merge Hra_updated as t
 using hra as s
 ON T.employeenumber=s.employeenumber
