@@ -1,0 +1,49 @@
+use task
+select * from Hra --source
+
+--created target table using source by procedure
+create procedure Hraupdated
+as
+begin
+	select department,educationfield,jobrole,EmployeeNumber
+	from Hra
+	where EmployeeNumber between 40 and 60
+end
+
+create table Hra_updated(department varchar(40),educationfield varchar(40),jobrole varchar(40),EmployeeNumber int)
+insert into Hra_updated exec hraupdated
+
+select * from Hra_updated   --target
+
+update Hra_updated set department='biology' where educationfield='Human resources'
+
+declare @employeenumber int
+declare @department varchar(50)
+declare @educationfield varchar(50)
+declare @jobrole varchar(40)
+merge Hra_updated as t
+using hra as s
+ON T.employeenumber=s.employeenumber
+WHEN MATCHED THEN
+     UPDATE SET T.employeenumber=s.employeenumber,T.department = S.department,T.educationfield = S.educationfield,t.jobrole=s.jobrole
+	 WHEN NOT MATCHED BY TARGET THEN
+     INSERT (employeenumber,department,educationfield,jobrole) VALUES(s.employeenumber,s.department,s.educationfield,s.jobrole)
+	 WHEN NOT MATCHED BY source THEN
+	 delete;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--USING (VALUES(@department,@educationfield,@jobrole)) AS hra.S(department,educationfield,jobrole)
